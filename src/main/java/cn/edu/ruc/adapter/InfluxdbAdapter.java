@@ -27,7 +27,7 @@ import okhttp3.Response;
  */
 public class InfluxdbAdapter implements DBAdapter {
 	private String URL = "http://%s:%s";
-	private String DB_NAME = "ruc_test_5";
+	private String DB_NAME = "ruc_test_ty";
 	private String WRITE_URL = "/write?precision=ms&db=%s";
 	private String QUERY_URL = "/query?db=%s";
 	private org.influxdb.InfluxDB INFLUXDB = null;
