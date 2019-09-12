@@ -112,12 +112,12 @@ public class CoreBiz {
 			currentTime+=tsParamConfig.getStep()*tsParamConfig.getCacheTimes();
 			if(count%(10)==0) {
 				result=generateWriteResult(timeoutList,ppsList);
-				LOGGER.info("current [{}],progerss [{}/{}],pps [{} points/s],points [{},{}],timeout(us)[max:{},min:{},95:{},50:{},mean:{}]",
+				LOGGER.info("current [{}],progress [{}/{}],pps [{} points/s],points [{},{}],timeout(us)[max:{},min:{},95:{},50:{},mean:{}]",
 						currentTime,(currentTime-tsParamConfig.getStartTime())/(tsParamConfig.getStep()*tsParamConfig.getCacheTimes()),
 						(tsParamConfig.getEndTime()-tsParamConfig.getStartTime())/(tsParamConfig.getStep()*tsParamConfig.getCacheTimes()),
 						pps,sumNum,sumPoints,result.getMaxTimeout(),result.getMinTimeout(),result.getNinty5Timeout(),result.getFiftyTimeout(),result.getMeanTimeout());
 			}else {
-				LOGGER.info("current [{}],progerss [{}/{}],pps [{} points/s],points [{},{}]",
+				LOGGER.info("current [{}],progress [{}/{}],pps [{} points/s],points [{},{}]",
 						currentTime,(currentTime-tsParamConfig.getStartTime())/(tsParamConfig.getStep()*tsParamConfig.getCacheTimes()),
 						(tsParamConfig.getEndTime()-tsParamConfig.getStartTime())/(tsParamConfig.getStep()*tsParamConfig.getCacheTimes()),
 						pps,sumNum,sumPoints);
