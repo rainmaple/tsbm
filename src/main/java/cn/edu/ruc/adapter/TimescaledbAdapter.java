@@ -25,11 +25,11 @@ import cn.edu.ruc.base.TsWrite;
 public class TimescaledbAdapter implements DBAdapter{
 	
 	private String DRIVER_CLASS ="org.postgresql.Driver";
-	private String URL ="jdbc:postgresql://%s:%s/tutorial";
+	private String URL ="jdbc:postgresql://%s:%s/lyr";
 	//"jdbc:postgresql://localhost:5432/tutorial", "postgres", "123456"
 	private String USER ="";
 	private String PASSWD ="";
-	private final String ROOT_SERIES_NAME="testgres2";
+	private final String ROOT_SERIES_NAME="testgres";
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	private TsParamConfig tspc=null;
 	
@@ -66,7 +66,8 @@ public class TimescaledbAdapter implements DBAdapter{
 		    statement = connection.createStatement();
 		    try {
 		    	
-		    	String setStorageSql="CREATE TABLE "+ROOT_SERIES_NAME+ "( timestamp        TIMESTAMPTZ       NOT NULL , device_id    TEXT              NOT NULL)";
+		    	String setStorageSql="CREATE TABLE "+ROOT_SERIES_NAME+ "( timestamp  TIMESTAMPTZ " +
+						" NOT NULL , device_id  TEXT   NOT NULL)";
 		    	statement.executeUpdate(setStorageSql);
 		    	logger.info("{} create table finished[{}/{}]");
 		    	
@@ -82,15 +83,13 @@ public class TimescaledbAdapter implements DBAdapter{
 				    		String sensorCode="s_"+sensorIdx;
 				    		//ALTER TABLE conditions
 				    		//  ADD COLUMN humidity DOUBLE PRECISION NULL;
-				    		String sql="ALTER TABLE "+ROOT_SERIES_NAME + " ADD COLUMN " +sensorCode+"  DOUBLE PRECISION NULL;";
+				    		String sql="ALTER TABLE "+ROOT_SERIES_NAME + " ADD COLUMN "
+									+sensorCode+"  DOUBLE PRECISION NULL;";
 				    		statement.addBatch(sql);
 				    	}
 				    	statement.executeBatch();
 				    	statement.clearBatch();
 				    	logger.info("{} alter table finished[{}/{}].");
-				    	//String sql2 = "INSERT INTO "+ROOT_SERIES_NAME + "(timestamp, device_id)" + " VALUES(now(),d_1);";
-				    	//statement.addBatch(sql2);
-				    	//statement.executeUpdate(sql2);
 					} catch (Exception e) {
 						e.printStackTrace();
 				}
@@ -108,17 +107,14 @@ public class TimescaledbAdapter implements DBAdapter{
 	private  Connection getConnection(){
 		Connection connection=null;
 		 try {
-//			connection = DriverManager.getConnection(URL, USER, PASSWD);
-			 //数据源管理
-			// connection=getDataSource().getConnection();
 			 Class.forName("org.postgresql.Driver");
 	         	connection = DriverManager
-	            .getConnection("jdbc:postgresql://localhost:5432/tutorial",
-	            "postgres", "123456");
+	            .getConnection("jdbc:postgresql://localhost:5432/lyr",
+	            "postgres", "postgres");
 		 } catch (Exception e) {
 			e.printStackTrace();
 		}
-		 return connection;
+		return connection;
 	}
 	
 	private void closeConnection(Connection conn){
@@ -148,9 +144,7 @@ public class TimescaledbAdapter implements DBAdapter{
 			StringBuffer valueBuffer=new StringBuffer();
 			sqlBuffer.append("insert into ");
 			sqlBuffer.append(ROOT_SERIES_NAME);
-			//sqlBuffer.append(".");
 			String deviceCode = pkg.getDeviceCode();
-			//sqlBuffer.append("'"+deviceCode+"'");
 			sqlBuffer.append("(");
 			sqlBuffer.append("timestamp , device_id");
 			//INSERT INTO conditions(time, location, temperature, humidity)
@@ -367,7 +361,7 @@ public class TimescaledbAdapter implements DBAdapter{
 		ds.setDbType("timescaledb");
 		ds.setDriverClass("org.postgresql.Driver");
 		ds.setIp("localhost");
-		ds.setPasswd("123456");
+		ds.setPasswd("postgres");
 		ds.setPort("5432");
 		ds.setUser("postgres");
 		TsParamConfig tspc = new TsParamConfig();
