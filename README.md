@@ -20,7 +20,7 @@ to config
 ```DB_USER=the database login username ``` 
 
 ```DB_PASSWD=the database login password ``` 
-### Start import (this procedure is neccessary)
+### * Start import (this procedure is neccessary)
 ```./import.sh``` 
 ### Start write_test
 ```./write_test.sh``` 
