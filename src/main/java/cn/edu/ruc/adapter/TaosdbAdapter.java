@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.*;
 
 import cn.edu.ruc.base.*;
-import com.alibaba.druid.pool.DruidDataSource;
 import com.taosdata.jdbc.TSDBDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -379,7 +378,12 @@ public class TaosdbAdapter implements DBAdapter{
     private Connection getConnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(jdbcUrl);
+            Properties connProps = new Properties();
+            connProps.setProperty(TSDBDriver.PROPERTY_KEY_CONFIG_DIR, "/etc/taos");
+            connProps.setProperty(TSDBDriver.PROPERTY_KEY_CHARSET, "UTF-8");
+            connProps.setProperty(TSDBDriver.PROPERTY_KEY_LOCALE, "en_US.UTF-8");
+            connProps.setProperty(TSDBDriver.PROPERTY_KEY_TIME_ZONE, "UTC-8");
+            connection = DriverManager.getConnection(jdbcUrl,connProps);
         } catch (Exception e) {
             e.printStackTrace();
         }
