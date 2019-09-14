@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Tencent CTSDB Adapter
+ */
+
 public class CTsdbAdapter implements DBAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(CTsdbAdapter.class);
     private String URL="http://%s:%s";

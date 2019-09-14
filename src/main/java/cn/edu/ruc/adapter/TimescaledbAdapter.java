@@ -46,9 +46,6 @@ public class TimescaledbAdapter implements DBAdapter{
 		URL=String.format(URL,ds.getIp(),ds.getPort());
 		USER=ds.getUser();
 		PASSWD=ds.getPasswd();
-		//初始化数据库
-		//getDataSource();
-		//初始化存储组
 		//初始化存储组
 		if(tspc.getTestMode().equals("write")) {
 			initTimeseriesAndStorage(tspc);
@@ -76,8 +73,6 @@ public class TimescaledbAdapter implements DBAdapter{
 		    	statement.execute(setHypertabelSql);
 		    	// 创建超表
 		    	// 创建表结束
-		    	
-				//for(int deviceIdx=0;deviceIdx<deviceNum;deviceIdx++) {
 			    try {
 				    	for(int sensorIdx=0;sensorIdx<sensorNum;sensorIdx++) {
 				    		String sensorCode="s_"+sensorIdx;
