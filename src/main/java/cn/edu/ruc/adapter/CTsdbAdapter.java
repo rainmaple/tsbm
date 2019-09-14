@@ -61,6 +61,9 @@ public class CTsdbAdapter implements DBAdapter {
 
 	@Override
 	public void initDataSource(TsDataSource ds, TsParamConfig tspc) {
+		/**
+		 * format 请求Api
+		 */
 		Authenticator.setDefault(new MyAuthenticator());
 		URL=String.format(URL,ds.getIp(),ds.getPort());
         queryUrl = URL + "/%s/_search";
