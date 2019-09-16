@@ -111,7 +111,7 @@ public class TaosdbAdapter implements DBAdapter {
             sqlBufferSets.append("INSERT INTO" + " ");
             sqlBufferSets.append(TABLE_NAME);
             sqlBufferSets.append("(");
-            sqlBufferSets.append("timestamp , device_id");
+            sqlBufferSets.append("ts, device_id");
 
             Set<String> sensorCodes = pkg.getSensorCodes();
             String deviceCode = pkg.getDeviceCode();
@@ -131,7 +131,7 @@ public class TaosdbAdapter implements DBAdapter {
             }
 
             sqlBufferSets.append(") VALUES");
-            valueBuffer.append(")");
+            valueBuffer.append(");");
             sqlBufferSets.append(valueBuffer);
             sqls_list.add(sqlBufferSets.toString());
             sqlBufferSets.setLength(0);
