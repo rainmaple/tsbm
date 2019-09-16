@@ -399,14 +399,14 @@ public class TaosdbAdapter implements DBAdapter {
             }
             sql_sb.append(");");
             stmt.executeUpdate(sql_sb.toString());
-            LOGGER.info("excute create table sql : "+sql_sb);
+            LOGGER.info("excute create table sql : "+sql_sb.toString());
 
-            LOGGER.info("Successfully executed: %s\n", sql_sb);
+            LOGGER.info("Successfully executed: %s\n", sql_sb.toString());
             LOGGER.info("{} create table finished[{}/{}]");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to execute SQL: %s\n", sql_sb);
+            LOGGER.info("Failed to execute SQL: %s\n", sql_sb.toString());
             System.exit(4);
         } catch (Exception e) {
             e.printStackTrace();
