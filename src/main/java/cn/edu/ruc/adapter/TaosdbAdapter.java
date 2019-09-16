@@ -330,6 +330,7 @@ public class TaosdbAdapter implements DBAdapter {
             conn = this.getConnection();
             statement = conn.createStatement();
             long startTime = System.nanoTime();
+            LOGGER.info("exec 传入query:"+query.toString());
             ResultSet rs = statement.executeQuery(query.toString());
             rs.next();
             long endTime = System.nanoTime();
