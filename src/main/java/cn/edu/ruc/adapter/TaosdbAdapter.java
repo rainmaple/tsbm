@@ -142,7 +142,6 @@ public class TaosdbAdapter implements DBAdapter {
     /****
      * @Method execWrite 正式写入数据
      * 对预处理中sql集合进行批量执行
-     * INSERT INTO conditions(time, location, temperature, humidity)
      * @param write
      * @return
      */
@@ -236,7 +235,9 @@ public class TaosdbAdapter implements DBAdapter {
             default:
                 break;
         }
+
         sc.append("FROM" + " ");
+
         if (tsQuery.getQueryType() == 3) {
             String template = TABLE_NAME + ".%s";
             List<String> devices = tsQuery.getDevices();
@@ -257,13 +258,13 @@ public class TaosdbAdapter implements DBAdapter {
         }
         if (tsQuery.getStartTimestamp() != null) {
             sc.append("AND" + " ");
-            sc.append("time >=");
+            sc.append("ts >=");
             sc.append(tsQuery.getStartTimestamp());
             sc.append(" ");
         }
         if (tsQuery.getEndTimestamp() != null) {
             sc.append("AND" + " ");
-            sc.append("time <=");
+            sc.append("ts <=");
             sc.append(tsQuery.getEndTimestamp());
             sc.append(" ");
         }
@@ -282,33 +283,34 @@ public class TaosdbAdapter implements DBAdapter {
             sc.append(" ");
         }
         if (tsQuery.getGroupByUnit() != null && tsQuery.getQueryType() == 2) {
-            sc.append("GROUP BY" + " ");
+            //sc.append("GROUP BY" + " ");
+            sc.append("INTERVAL" + " ");
             switch (tsQuery.getGroupByUnit()) {
                 case 1:
-                    sc.append(" " + "(1s,[");
+                    sc.append(" " + "(1s");
                     break;
                 case 2:
-                    sc.append(" " + "(1m,[");
+                    sc.append(" " + "(1m");
                     break;
                 case 3:
-                    sc.append(" " + "(1h,[");
+                    sc.append(" " + "(1h");
                     break;
                 case 4:
-                    sc.append(" " + "(1d,[");
+                    sc.append(" " + "(1d");
                     break;
                 case 5:
-                    sc.append(" " + "(1M,[");
+                    sc.append(" " + "(1M");
                     break;
                 case 6:
-                    sc.append(" " + "(1y,[");
+                    sc.append(" " + "(1y");
                     break;
                 default:
                     break;
             }
-            sc.append(tsQuery.getStartTimestamp());
-            sc.append(",");
-            sc.append(tsQuery.getEndTimestamp());
-            sc.append("])");
+            //sc.append(tsQuery.getStartTimestamp());
+            //sc.append(",");
+            //sc.append(tsQuery.getEndTimestamp());
+            sc.append(")");
         }
         return sc.toString().replaceFirst("AND", "WHERE");
     }
