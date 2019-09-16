@@ -389,8 +389,9 @@ public class TaosdbAdapter implements DBAdapter {
             LOGGER.info("Successfully executed: %s\n", sql);
             LOGGER.info("{} use database" + DB_NAME + " finished[{}/{}]");
 
-            sql = "create table if not exists " + TABLE_NAME + " (ts timestamp NOT NULL, device_id binary(50) NOT NULL);";
+            sql = "create table if not exists " + TABLE_NAME + " (ts timestamp, device_id binary(50));";
             stmt.executeUpdate(sql);
+            LOGGER.info("excute sql : "+sql);
             //批量修改表字段
             for (int sensorIdx = 0; sensorIdx < sensorNum; sensorIdx++) {
                 String sensorCode = "s_" + sensorIdx;
