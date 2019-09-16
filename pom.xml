@@ -125,11 +125,11 @@
 		    <artifactId>cassandra-driver-core</artifactId>
 		    <version>${cassandra.driver.version}</version>
 		</dependency> -->
-<!-- 		 <dependency>
-             <groupId>com.taosdata</groupId>
-             <artifactId>tbase</artifactId>
-              <version>1.1.4</version>
-          </dependency> -->
+		 <dependency>
+             <groupId>com.taosdata.jdbc</groupId>
+             <artifactId>taosdata-java</artifactId>
+			 <version>1.0.1</version>
+          </dependency>
 	</dependencies>
 	<build>
 		<resources>
