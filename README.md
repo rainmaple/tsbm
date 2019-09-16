@@ -1,10 +1,14 @@
-# Tsbm 
-if you want to test new database ,you can see [this md](https://github.com/dbiir/ts-benchmark/blob/master/doc/development.md)
+# Tsbm
+
+if you want to test new database ,you can see [this md](/doc/development.md)
 timeseries db benchmark 
 
 # Prerequisites
-1. Java >= 1.8
-2. Maven >= 3.0 (If you want to compile and install IoTDB from source code)
+
+1. OS (centos 7)
+2. Java version>= 1.8
+3. Maven >= 3.0 (If you want to compile and install IoTDB from source code)
+4. if you want to test TDengine , the extra dependency need to be added
 
 # Quick Start
 
@@ -20,6 +24,7 @@ to config
 ```DB_USER=the database login username ``` 
 
 ```DB_PASSWD=the database login password ``` 
+
 ### * Start import (this procedure is neccessary)
 ```./import.sh``` 
 ### Start write_test

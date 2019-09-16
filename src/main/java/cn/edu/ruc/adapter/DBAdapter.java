@@ -27,7 +27,7 @@ public interface DBAdapter {
 	 */
 	public Status execWrite(Object write);
 	/**
-	 * 查询预处理
+	 * 查询预处理，传入查询，进行解析规格化成sql
 	 */
 	public Object preQuery(TsQuery tsQuery);
 	/**
