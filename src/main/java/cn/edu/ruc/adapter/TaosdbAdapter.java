@@ -70,7 +70,7 @@ public class TaosdbAdapter implements DBAdapter {
     }
 
     /**
-     * //TODO 初始化时间序列，并设置storage
+     * 初始化时间序列，并设置storage
      *
      * @param tspc
      */
@@ -106,7 +106,7 @@ public class TaosdbAdapter implements DBAdapter {
         List<String> sqls_list = new ArrayList<>();
         LinkedList<TsPackage> pkgs = tsWrite.getPkgs();
         StringBuffer sqlBufferSets = new StringBuffer();
-        int count = 0;
+        //int count = 0;
         for (TsPackage pkg : pkgs) {
             StringBuffer valueBuffer = new StringBuffer();
             sqlBufferSets.append("INSERT INTO" + " ");
@@ -135,8 +135,8 @@ public class TaosdbAdapter implements DBAdapter {
             sqlBufferSets.append(") VALUES");
             valueBuffer.append(");");
             sqlBufferSets.append(valueBuffer);
-            count++;
-            if(count<=1) {LOGGER.info("insert sql :"+sqlBufferSets.toString());}
+            //count++;
+           // if(count<=1) {LOGGER.info("insert sql :"+sqlBufferSets.toString());}
             sqls_list.add(sqlBufferSets.toString());
             sqlBufferSets.setLength(0);
         }
