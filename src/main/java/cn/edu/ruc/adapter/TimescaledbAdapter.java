@@ -137,29 +137,29 @@ public class TimescaledbAdapter implements DBAdapter{
 		StringBuffer sqlBuffer=new StringBuffer();
 		for(TsPackage pkg:pkgs) {
 			StringBuffer valueBuffer=new StringBuffer();
-			sqlBuffer.append("insert into ");
-			sqlBuffer.append(ROOT_SERIES_NAME);
-			String deviceCode = pkg.getDeviceCode();
-			sqlBuffer.append("(");
-			sqlBuffer.append("timestamp , device_id");
-			//INSERT INTO conditions(time, location, temperature, humidity)
-			Set<String> sensorCodes = pkg.getSensorCodes();
-			valueBuffer.append("(");
-			valueBuffer.append("to_timestamp(" +pkg.getTimestamp() + ")"); // pkg.getTimestamp()  now时间改为这个时间
+		sqlBuffer.append("insert into ");
+		sqlBuffer.append(ROOT_SERIES_NAME);
+		String deviceCode = pkg.getDeviceCode();
+		sqlBuffer.append("(");
+		sqlBuffer.append("timestamp , device_id");
+		//INSERT INTO conditions(time, location, temperature, humidity)
+		Set<String> sensorCodes = pkg.getSensorCodes();
+		valueBuffer.append("(");
+		valueBuffer.append("to_timestamp(" +pkg.getTimestamp() + ")"); // pkg.getTimestamp()  now时间改为这个时间
+		valueBuffer.append(",");
+		valueBuffer.append("'"+deviceCode+"'");
+		for(String sensorCode:sensorCodes) {
+			sqlBuffer.append(",");
+			sqlBuffer.append(sensorCode);
 			valueBuffer.append(",");
-			valueBuffer.append("'"+deviceCode+"'");
-			for(String sensorCode:sensorCodes) {
-				sqlBuffer.append(",");
-				sqlBuffer.append(sensorCode);
-				valueBuffer.append(",");
-				valueBuffer.append(pkg.getValue(sensorCode));
-			}
-			sqlBuffer.append(") values");
-			valueBuffer.append(")");
-			sqlBuffer.append(valueBuffer);
-			sqls.add(sqlBuffer.toString());
-			sqlBuffer.setLength(0);
+			valueBuffer.append(pkg.getValue(sensorCode));
 		}
+		sqlBuffer.append(") values");
+		valueBuffer.append(")");
+		sqlBuffer.append(valueBuffer);
+		sqls.add(sqlBuffer.toString());
+		sqlBuffer.setLength(0);
+	}
 		return sqls;
 	}
 
