@@ -310,7 +310,7 @@ public class TaosdbAdapter implements DBAdapter {
             //sc.append(tsQuery.getStartTimestamp());
             //sc.append(",");
             //sc.append(tsQuery.getEndTimestamp());
-            sc.append(")");
+            sc.append(");");
         }
         return sc.toString().replaceFirst("AND", "WHERE");
     }
