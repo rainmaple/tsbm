@@ -388,11 +388,17 @@ public class TaosdbAdapter implements DBAdapter {
             stmt.executeUpdate(sql);
             LOGGER.info("Successfully executed: %s\n", sql);
             LOGGER.info("{} use database" + DB_NAME + " finished[{}/{}]");
+            StringBuffer sql_sb = new StringBuffer();
 
-            sql = "create table if not exists " + TABLE_NAME + " (ts timestamp, device_id binary(50));";
+            sql_sb.append( "create table if not exists " + TABLE_NAME + " (ts timestamp, device_id binary(50)");
+            for (int sensorIdx = 0; sensorIdx < sensorNum; sensorIdx++) {
+                String sensorCode = "s_" + sensorIdx;
+                sql_sb.append(","+sensorCode+" DOUBLE") ;
+            }
+            sql_sb.append(");");
             stmt.executeUpdate(sql);
-            LOGGER.info("excute sql : "+sql);
-            //批量修改表字段
+            LOGGER.info("excute create table sql : "+sql);
+            /*批量修改表字段
             for (int sensorIdx = 0; sensorIdx < sensorNum; sensorIdx++) {
                 String sensorCode = "s_" + sensorIdx;
                 String sql_alter = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN "
@@ -400,7 +406,7 @@ public class TaosdbAdapter implements DBAdapter {
                 stmt.addBatch(sql_alter);
             }
             stmt.executeBatch();
-            stmt.clearBatch();
+            stmt.clearBatch();*/
             LOGGER.info("{} alter table finished[{}/{}].");
 
             LOGGER.info("Successfully executed: %s\n", sql);
