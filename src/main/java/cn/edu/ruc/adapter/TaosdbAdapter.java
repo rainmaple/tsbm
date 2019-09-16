@@ -377,6 +377,7 @@ public class TaosdbAdapter implements DBAdapter {
         LOGGER.info("\n---------------------------------------------------------------");
         LOGGER.info("Start creating databases and tables...");
         String sql = "";
+        StringBuffer sql_sb = new StringBuffer();
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -389,7 +390,7 @@ public class TaosdbAdapter implements DBAdapter {
             stmt.executeUpdate(sql);
             LOGGER.info("Successfully executed: %s\n", sql);
             LOGGER.info("{} use database" + DB_NAME + " finished[{}/{}]");
-            StringBuffer sql_sb = new StringBuffer();
+
 
             sql_sb.append( "create table if not exists " + TABLE_NAME + " (ts timestamp, device_id binary(50)");
             for (int sensorIdx = 0; sensorIdx < sensorNum; sensorIdx++) {
@@ -397,25 +398,15 @@ public class TaosdbAdapter implements DBAdapter {
                 sql_sb.append(","+sensorCode+" DOUBLE") ;
             }
             sql_sb.append(");");
-            stmt.executeUpdate(sql);
-            LOGGER.info("excute create table sql : "+sql);
-            /*批量修改表字段
-            for (int sensorIdx = 0; sensorIdx < sensorNum; sensorIdx++) {
-                String sensorCode = "s_" + sensorIdx;
-                String sql_alter = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN "
-                        + sensorCode + "  DOUBLE ;";
-                stmt.addBatch(sql_alter);
-            }
-            stmt.executeBatch();
-            stmt.clearBatch();*/
-            LOGGER.info("{} alter table finished[{}/{}].");
+            stmt.executeUpdate(sql_sb.toString());
+            LOGGER.info("excute create table sql : "+sql_sb);
 
-            LOGGER.info("Successfully executed: %s\n", sql);
+            LOGGER.info("Successfully executed: %s\n", sql_sb);
             LOGGER.info("{} create table finished[{}/{}]");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to execute SQL: %s\n", sql);
+            LOGGER.info("Failed to execute SQL: %s\n", sql_sb);
             System.exit(4);
         } catch (Exception e) {
             e.printStackTrace();
