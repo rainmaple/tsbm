@@ -27,7 +27,7 @@ public class TaosdbAdapter implements DBAdapter {
     private static final String JDBC_PROTOCAL = "jdbc:TAOS://";
     private static final String DB_NAME = "db";
     private static final String TABLE_NAME = "conditions";
-    private static final String URL_Format = "%s%s:%d/%s?user=%s&password=%s";
+    private static final String URL_Format = "%s%s:%s/%s?user=%s&password=%s";
 
     private String db_ip = "";
     private String db_user = "";
