@@ -106,6 +106,7 @@ public class TaosdbAdapter implements DBAdapter {
         List<String> sqls_list = new ArrayList<>();
         LinkedList<TsPackage> pkgs = tsWrite.getPkgs();
         StringBuffer sqlBufferSets = new StringBuffer();
+        int count = 0;
         for (TsPackage pkg : pkgs) {
             StringBuffer valueBuffer = new StringBuffer();
             sqlBufferSets.append("INSERT INTO" + " ");
@@ -128,11 +129,14 @@ public class TaosdbAdapter implements DBAdapter {
                 valueBuffer.append(",");
                 String value_sensorCode = pkg.getValue(sensorCode).toString();
                 valueBuffer.append(value_sensorCode);
+
             }
 
             sqlBufferSets.append(") VALUES");
             valueBuffer.append(");");
             sqlBufferSets.append(valueBuffer);
+            count++;
+            if(count<=1) {LOGGER.info("insert sql :"+sqlBufferSets.toString());}
             sqls_list.add(sqlBufferSets.toString());
             sqlBufferSets.setLength(0);
         }
@@ -151,12 +155,20 @@ public class TaosdbAdapter implements DBAdapter {
         Connection connection = null;
         Statement statement = null;
         Long costTime = 0L;
+        String sql_prev = "";
         try {
             connection = this.getConnection();
             statement = connection.createStatement();
+
+            sql_prev = "use " + DB_NAME;
+            statement.executeUpdate(sql_prev);
+            LOGGER.info("Successfully executed: %s\n", sql_prev);
+            LOGGER.info(" use database " + DB_NAME + " finished");
+
             for (String sql_record : sqls_list) {
                 statement.addBatch(sql_record);
             }
+
             long startTime = System.nanoTime();
             statement.executeBatch();
             long endTime = System.nanoTime();
@@ -368,7 +380,7 @@ public class TaosdbAdapter implements DBAdapter {
     }
 
     /***
-     * 创建表
+     * 创建库表 (checked)
      * @schema ts timestamp , device_id TEXT ,sensorCode DOUBLE...sensorCode DOUBLE
      *
      */
@@ -384,12 +396,12 @@ public class TaosdbAdapter implements DBAdapter {
             sql = "create database if not exists " + DB_NAME;
             stmt.executeUpdate(sql);
             LOGGER.info("Successfully executed: %s\n", sql);
-            LOGGER.info("{} create database finished[{}/{}]");
+            LOGGER.info(" create database finished");
 
             sql = "use " + DB_NAME;
             stmt.executeUpdate(sql);
             LOGGER.info("Successfully executed: %s\n", sql);
-            LOGGER.info("{} use database" + DB_NAME + " finished[{}/{}]");
+            LOGGER.info(" use database " + DB_NAME + " finished");
 
 
             sql_sb.append( "create table if not exists " + TABLE_NAME + " (ts timestamp, device_id binary(50)");
