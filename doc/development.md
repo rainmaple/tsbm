@@ -48,4 +48,4 @@
 
 #### Test the new Database
 
-then you can read [this readme](README.md)  run this test tool.
+then you can read [this readme](/README.md)  run this test tool.
