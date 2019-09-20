@@ -162,7 +162,7 @@ public class TaosdbAdapter implements DBAdapter {
 
             sql_prev = "use " + DB_NAME;
             statement.executeUpdate(sql_prev);
-            LOGGER.info("Successfully executed: %s\n", sql_prev);
+            LOGGER.info("Successfully executed: %s", sql_prev);
             LOGGER.info(" use database " + DB_NAME + " finished");
 
             for (String sql_record : sqls_list) {

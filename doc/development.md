@@ -12,7 +12,7 @@
 3. about the related methods, here for example:
 
 ```java
- /**
+  /**
    * @method initDataSource
    * you need to config the database, user,password,ip,port,etc.
    */
@@ -48,4 +48,4 @@
 
 #### Test the new Database
 
-read [this document](https://github.com/dbiir/ts-benchmark/blob/master/README.md)  run this test tool.
+then you can read [this readme](README.md)  run this test tool.
