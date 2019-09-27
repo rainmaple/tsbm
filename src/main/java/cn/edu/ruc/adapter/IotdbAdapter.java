@@ -30,7 +30,7 @@ public class IotdbAdapter implements DBAdapter {
 	private  String URL ="jdbc:tsfile://%s:%s/";
 	private  String USER ="";
 	private  String PASSWD ="";
-	private static final String ROOT_SERIES_NAME="root.perform";
+	private static final String ROOT_SERIES_NAME="root.lyr";
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	private TsParamConfig tspc=null;
 	@Override
